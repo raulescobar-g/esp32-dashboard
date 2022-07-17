@@ -4,28 +4,16 @@
 	import { Header, Tile, Content, Grid, Row, Column, Breakpoint } from 'carbon-components-svelte';
 	import { LineChart } from '@carbon/charts-svelte';
 
-	const data = [
-		{
-			group: 'my room',
-			key: 1,
-			value: 100
-		},
-		{
-			group: 'my room',
-			key: 2,
-			value: 110
-		},
-		{
-			group: 'my room',
-			key: 3,
-			value: 140
-		},
-		{
-			group: 'my room',
-			key: 4,
-			value: 300
-		}
-	];
+	export let data;
+
+	const formattedData = data?.map((t) => {
+		return {
+			group: t?.location,
+			key: t?.datetime,
+			value: t?.temp
+		};
+	});
+
 	const options = {
 		title: 'Temps',
 		axes: {
@@ -43,11 +31,11 @@
 		height: '400px',
 		width: '800px'
 	};
-</script>
 
-<svelte:head>
-	<link rel="stylesheet" href="https://unpkg.com/carbon-components-svelte/css/g100.css" />
-</svelte:head>
+	// can update later to have themeing
+	// let theme = "white"; // "white" | "g10" | "g80" | "g90" | "g100"
+	// $: document.documentElement.setAttribute("theme", theme);
+</script>
 
 <Header company="Raul" platformName="temp dashboard" />
 <Content>
@@ -58,14 +46,14 @@
 			<Column>
 				<div class="spacer">
 					<Tile>
-						<LineChart theme="g100" {data} {options} />
+						<LineChart theme="g100" data={formattedData} {options} />
 					</Tile>
 				</div>
 			</Column>
 			<Column>
 				<div class="spacer">
 					<Tile>
-						<p>howdy</p>
+						<p>hi</p>
 					</Tile>
 				</div>
 			</Column>
